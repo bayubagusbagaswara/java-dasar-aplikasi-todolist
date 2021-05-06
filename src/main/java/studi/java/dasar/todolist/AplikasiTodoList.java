@@ -13,7 +13,8 @@ public class AplikasiTodoList {
 //        modelLength();
 //        testInput();
 //        testViewShowTodoList();
-        testViewAddTodoList();
+//        testViewAddTodoList();
+        testViewRemoveTodoList();
     }
 
     /**
@@ -235,7 +236,33 @@ public class AplikasiTodoList {
      * Menampilkan view menghapus todo list
      */
     public static void viewRemoveTodoList(){
+        // butuh input todolist dari user
+        System.out.println("MENGHAPUS TODOLIST");
 
+        String number = input("Nomor yang dihapus (x jika batal hapus)");
+
+        if (number.equals("x")) {
+            // batal
+        } else {
+            // konversi number String menjadi integer
+            boolean success = removeTodoList(Integer.valueOf(number));
+            if (!success){
+                System.out.println("Gagal menghapus todolist : " + number);
+            }
+        }
+    }
+
+    public static void testViewRemoveTodoList(){
+
+        // tambahkan dulu todolist
+        addTodoList("satu");
+        addTodoList("dua");
+        addTodoList("tiga");
+        showTodoList(); // sebelum dihapus
+
+        viewRemoveTodoList(); // hapus
+
+        showTodoList(); // setelah dihapus
     }
 
     // cek model.length
