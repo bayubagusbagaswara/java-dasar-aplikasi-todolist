@@ -94,7 +94,7 @@ public class AplikasiTodoList {
     }
 
     /**
-     * Menampilkan view todo list
+     * Menampilkan Screen atau View todo list
      */
     public static void viewShowTodoList(){
         while (true){
@@ -118,7 +118,7 @@ public class AplikasiTodoList {
     }
 
     /**
-     * Menampilkan view menambahkan todo list
+     * Menampilkan Screen atau view Menambahkan todo list
      */
     public static void viewAddTodoList(){
         System.out.println("MENAMBAH TODOLIST");
@@ -132,7 +132,7 @@ public class AplikasiTodoList {
     }
 
     /**
-     * Menampilkan view menghapus todo list
+     * Menampilkan Screen atau View Menghapus todo list
      */
     public static void viewRemoveTodoList(){
         System.out.println("MENGHAPUS TODOLIST");
