@@ -4,6 +4,7 @@ public class AplikasiTodoList {
     public static String[] model = new String[10];
 
     public static void main(String[] args) {
+        testShowTodoList();
 
     }
 
@@ -11,7 +12,26 @@ public class AplikasiTodoList {
      * Menampilkan todo list
      */
     public static void showTodoList(){
+        
+        // Perulangan data array String
+        for (int i = 0; i < model.length; i++) {
+            // ambil data tiap ke-i, simpan ke todo
+            String todo = model[i];
+            // nomor todo
+            int nomor = i + 1;
 
+            // cek todo yang kosong
+            if (todo != null){
+                System.out.println(nomor + ". " + todo);
+            }
+        }
+    }
+
+    public static void testShowTodoList(){
+        // untuk test bisa masukkan datanya disini
+        model[0] = "Belajar Java Dasar";
+        model[1] = "Studi Todolist jada dasar";
+        showTodoList();
     }
 
     /**
