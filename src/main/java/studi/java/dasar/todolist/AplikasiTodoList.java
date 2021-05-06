@@ -5,7 +5,9 @@ public class AplikasiTodoList {
 
     public static void main(String[] args) {
 //        testShowTodoList();
-        testAddTodoList();
+//        testAddTodoList();
+        testRemoveTodoList();
+//        modelLength();
     }
 
     /**
@@ -89,9 +91,55 @@ public class AplikasiTodoList {
 
     /**
      * Menghapus todo dari list
+     * @param number adalah inputan yang dibutuhkan untuk menjalankan method
+     * karena untuk menghapus todo list berdasarkan nomor urutannya
+     * @return
      */
-    public static void remodeTodoList(){
+    public static boolean removeTodoList(Integer number){
+        // kalo return boolean nya adalah true, maka aksi menghapusnya sukses
 
+        // cek number todolist (disini kita memasukkan numbernya lebih dari 1),
+        // karena number bernilai lebih dari index array + 1
+        if ((number - 1) >= model.length){
+            return false; // gagal menghapus, karena diluar kapasitas arraynya
+        } else if (model[number - 1] == null){
+            // cek array kalo sudah null atau sudah tidak ada datanya
+            return false; // artinya sudah tidak ada datanya, dan tidak bisa dihapus
+        } else {
+            // jika ada datanya, maka isi dengan null (berhasil dikosongkan)
+            model[number - 1] = null;
+
+            for (int i = (number - 1); i < model.length; i++) {
+                // cek urutan datanya, jika datanya berada di ujung
+                if (i == (model.length) - 1) {
+                    model[i] = null; // kosongkan datanya
+                } else {
+                    model[i] = model[i + 1];
+                }
+            }
+            return true;
+        }
+    }
+
+    public static void testRemoveTodoList(){
+        // tambahkan data dulu
+        addTodoList("satu");
+        addTodoList("dua");
+        addTodoList("tiga");
+
+        // remove jika lebih dari kapasitas arraynya
+        boolean result = removeTodoList(11);
+        System.out.println(result);
+
+        // remove jika arraynya masih null, jadi false, tapi jika arraynya ada datanya maka akan dihapus
+        result = removeTodoList(7);
+        System.out.println(result);
+
+        // remove yang berhasil
+        result = removeTodoList(2);
+        System.out.println(result);
+
+        showTodoList();
     }
 
     /**
@@ -114,5 +162,11 @@ public class AplikasiTodoList {
      */
     public static void viewRemoveTodoList(){
 
+    }
+
+    // cek model.length
+    public static void modelLength(){
+        int a = model.length;
+        System.out.println("model length: " + a);
     }
 }
