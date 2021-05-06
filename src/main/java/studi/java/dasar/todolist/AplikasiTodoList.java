@@ -11,14 +11,16 @@ public class AplikasiTodoList {
 //        testAddTodoList();
 //        testRemoveTodoList();
 //        modelLength();
-        testInput();
+//        testInput();
+        testViewShowTodoList();
     }
 
     /**
      * Menampilkan todo list
      */
     public static void showTodoList(){
-        
+        // header menu showTodoList
+        System.out.println("TODOLIST");
         // Perulangan data array String
         for (int i = 0; i < model.length; i++) {
             // ambil data tiap ke-i, simpan ke todo
@@ -159,7 +161,6 @@ public class AplikasiTodoList {
 
         String channel = input("Channel");
         System.out.println(channel);
-
     }
 
     /**
@@ -167,12 +168,44 @@ public class AplikasiTodoList {
      */
     public static void viewShowTodoList(){
 
+        while (true){
+            // tampilkan todolist dulu
+            showTodoList();
+            // menerima input yakni Tambah dan Hapus
+            System.out.println("MENU : ");
+            System.out.println("1. Tambah");
+            System.out.println("2. Hapus");
+            System.out.println("x. Keluar");
+
+            String input = input("Pilih"); // terima input dari user pilihannya
+            if (input.equals("1")){
+                viewAddTodoList();
+            } else if (input.equals("2")){
+                viewRemoveTodoList();
+            } else if(input.equals("x")){
+                break; // keluar hentikan perulangan
+            } else {
+                System.out.println("Pilihan tidak dimengerti");
+            }
+        }
+    }
+
+    public static void testViewShowTodoList(){
+        // tambahkan todolist dulu
+         addTodoList("Satu");
+         addTodoList("Dua");
+         addTodoList("Tiga");
+         addTodoList("Empat");
+         addTodoList("Lima");
+
+
+        // tampilkan viewShowtodolist
+         viewShowTodoList();
     }
 
     /**
      * Menampilkan view menambahkan todo list
      */
-
     public static void viewAddTodoList(){
 
     }
