@@ -1,13 +1,17 @@
 package studi.java.dasar.todolist;
 
+import java.util.Scanner;
+
 public class AplikasiTodoList {
     public static String[] model = new String[10];
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 //        testShowTodoList();
 //        testAddTodoList();
-        testRemoveTodoList();
+//        testRemoveTodoList();
 //        modelLength();
+        testInput();
     }
 
     /**
@@ -140,6 +144,22 @@ public class AplikasiTodoList {
         System.out.println(result);
 
         showTodoList();
+    }
+
+    // INPUT DATA
+    public static String input(String info){
+        System.out.print(info + " : ");
+        String data = scanner.nextLine(); // baca data dari yg diketik user
+        return data;
+    }
+
+    public static void testInput(){
+        String name = input("Nama");
+        System.out.println("Hi " + name);
+
+        String channel = input("Channel");
+        System.out.println(channel);
+
     }
 
     /**
