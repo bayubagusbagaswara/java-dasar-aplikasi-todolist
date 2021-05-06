@@ -3,45 +3,32 @@ package studi.java.dasar.todolist;
 import java.util.Scanner;
 
 public class AplikasiTodoList {
+    /**
+     * Atribut Data
+     */
     public static String[] model = new String[10];
     public static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * MAIN FUNCTION
+     * @param args
+     */
     public static void main(String[] args) {
-//        testShowTodoList();
-//        testAddTodoList();
-//        testRemoveTodoList();
-//        modelLength();
-//        testInput();
-//        testViewShowTodoList();
-//        testViewAddTodoList();
-        testViewRemoveTodoList();
+        viewShowTodoList();
     }
 
     /**
      * Menampilkan todo list
      */
     public static void showTodoList(){
-        // header menu showTodoList
         System.out.println("TODOLIST");
-        // Perulangan data array String
         for (int i = 0; i < model.length; i++) {
-            // ambil data tiap ke-i, simpan ke todo
             String todo = model[i];
-            // nomor todo
             int nomor = i + 1;
-
-            // cek todo yang kosong
             if (todo != null){
                 System.out.println(nomor + ". " + todo);
             }
         }
-    }
-
-    public static void testShowTodoList(){
-        // untuk test bisa masukkan datanya disini
-        model[0] = "Belajar Java Dasar";
-        model[1] = "Studi Todolist jada dasar";
-        showTodoList();
     }
 
     /**
@@ -49,78 +36,44 @@ public class AplikasiTodoList {
      * @param todo sebagai parameter data teks todo list
      */
     public static void addTodoList(String todo){
-
-        // buat status untuk modelnya sudah penuh atau belum
         boolean isFull = true;
-        // Problemnya jika modelnya sudah penuh, artinya harus resize modelnya
-        // cek modelnya udah penuh atau belum
         for (int i = 0; i < model.length; i++) {
             if (model[i] == null){
-                // model masih ada yang kosong
                 isFull = false;
                 break;
             }
         }
-
-        // cek jika penuh, maka resize ukuran array modelnya yakni 2x lipat
-        // tapi jangan sampai data yang lama hilang
         if (isFull) {
-            // simpan dulu data lama
             String[] temporary = model;
-
-            // buat resize model baru 2x lipat
             model = new String[model.length * 2];
-
-            // masukkan data temp ke model yang baru
             for (int i = 0; i < temporary.length; i++) {
                 model[i] = temporary[i];
             }
         }
-
-        // memasukkan data ke dalam modelnya
-        // masukkan ke index yang data arraynya kosong
         for (int i = 0; i < model.length; i++) {
-            // cek kalo index modelnya isinya null
             if (model[i] == null) {
                 model[i] = todo;
-                // break, setelah menambahkan langsung keluar
                 break;
             }
         }
-    }
-
-    public static void testAddTodoList(){
-        // test dengan memasukkan data lebih dari 10, karena default modelnya 10
-        for (int i = 0; i < 25; i++) {
-            addTodoList("Contoh todo ke." + i);
-        }
-        showTodoList();
     }
 
     /**
      * Menghapus todo dari list
      * @param number adalah inputan yang dibutuhkan untuk menjalankan method
      * karena untuk menghapus todo list berdasarkan nomor urutannya
-     * @return
+     * @return berupa boolean, true jika berhasil remove dan false jika gagal remove
      */
     public static boolean removeTodoList(Integer number){
-        // kalo return boolean nya adalah true, maka aksi menghapusnya sukses
-
-        // cek number todolist (disini kita memasukkan numbernya lebih dari 1),
-        // karena number bernilai lebih dari index array + 1
         if ((number - 1) >= model.length){
-            return false; // gagal menghapus, karena diluar kapasitas arraynya
+            return false;
         } else if (model[number - 1] == null){
-            // cek array kalo sudah null atau sudah tidak ada datanya
-            return false; // artinya sudah tidak ada datanya, dan tidak bisa dihapus
+            return false;
         } else {
-            // jika ada datanya, maka isi dengan null (berhasil dikosongkan)
             model[number - 1] = null;
-
             for (int i = (number - 1); i < model.length; i++) {
-                // cek urutan datanya, jika datanya berada di ujung
                 if (i == (model.length) - 1) {
-                    model[i] = null; // kosongkan datanya
+                    model[i] = null;
                 } else {
                     model[i] = model[i + 1];
                 }
@@ -129,6 +82,86 @@ public class AplikasiTodoList {
         }
     }
 
+    /**
+     * Input Data dari User
+     * @param info adalah parameter untuk memberitahu info pilihan yang disediakan
+     * @return valuenya adalah data yang diinputkan user di terminal
+     */
+    public static String input(String info){
+        System.out.print(info + " : ");
+        String data = scanner.nextLine();
+        return data;
+    }
+
+    /**
+     * Menampilkan view todo list
+     */
+    public static void viewShowTodoList(){
+        while (true){
+            showTodoList();
+            System.out.println("MENU : ");
+            System.out.println("1. Tambah");
+            System.out.println("2. Hapus");
+            System.out.println("x. Keluar");
+
+            String input = input("Pilih");
+            if (input.equals("1")){
+                viewAddTodoList();
+            } else if (input.equals("2")){
+                viewRemoveTodoList();
+            } else if(input.equals("x")){
+                break;
+            } else {
+                System.out.println("Pilihan tidak dimengerti");
+            }
+        }
+    }
+
+    /**
+     * Menampilkan view menambahkan todo list
+     */
+    public static void viewAddTodoList(){
+        System.out.println("MENAMBAH TODOLIST");
+        String todo = input("Todo(x jika batal)");
+
+        if (todo.equals("x")){
+            // batal
+        } else {
+            addTodoList(todo);
+        }
+    }
+
+    /**
+     * Menampilkan view menghapus todo list
+     */
+    public static void viewRemoveTodoList(){
+        System.out.println("MENGHAPUS TODOLIST");
+        String number = input("Nomor yang dihapus (x jika batal hapus)");
+
+        if (number.equals("x")) {
+            // batal
+        } else {
+            boolean success = removeTodoList(Integer.valueOf(number));
+            if (!success){
+                System.out.println("Gagal menghapus todolist : " + number);
+            }
+        }
+    }
+
+    /**
+     * METHOD UNTUK TESTING
+     */
+    public static void testShowTodoList(){
+        model[0] = "Belajar Java Dasar";
+        model[1] = "Studi Todolist jada dasar";
+        showTodoList();
+    }
+    public static void testAddTodoList(){
+        for (int i = 0; i < 25; i++) {
+            addTodoList("Contoh todo ke." + i);
+        }
+        showTodoList();
+    }
     public static void testRemoveTodoList(){
         // tambahkan data dulu
         addTodoList("satu");
@@ -149,14 +182,6 @@ public class AplikasiTodoList {
 
         showTodoList();
     }
-
-    // INPUT DATA
-    public static String input(String info){
-        System.out.print(info + " : ");
-        String data = scanner.nextLine(); // baca data dari yg diketik user
-        return data;
-    }
-
     public static void testInput(){
         String name = input("Nama");
         System.out.println("Hi " + name);
@@ -164,109 +189,30 @@ public class AplikasiTodoList {
         String channel = input("Channel");
         System.out.println(channel);
     }
-
-    /**
-     * Menampilkan view todo list
-     */
-    public static void viewShowTodoList(){
-
-        while (true){
-            // tampilkan todolist dulu
-            showTodoList();
-            // menerima input yakni Tambah dan Hapus
-            System.out.println("MENU : ");
-            System.out.println("1. Tambah");
-            System.out.println("2. Hapus");
-            System.out.println("x. Keluar");
-
-            String input = input("Pilih"); // terima input dari user pilihannya
-            if (input.equals("1")){
-                viewAddTodoList();
-            } else if (input.equals("2")){
-                viewRemoveTodoList();
-            } else if(input.equals("x")){
-                break; // keluar hentikan perulangan
-            } else {
-                System.out.println("Pilihan tidak dimengerti");
-            }
-        }
-    }
-
     public static void testViewShowTodoList(){
-        // tambahkan todolist dulu
-         addTodoList("Satu");
-         addTodoList("Dua");
-         addTodoList("Tiga");
-         addTodoList("Empat");
-         addTodoList("Lima");
-
-
-        // tampilkan viewShowtodolist
-         viewShowTodoList();
+        addTodoList("Satu");
+        addTodoList("Dua");
+        addTodoList("Tiga");
+        addTodoList("Empat");
+        addTodoList("Lima");
+        viewShowTodoList();
     }
-
-    /**
-     * Menampilkan view menambahkan todo list
-     */
-    public static void viewAddTodoList(){
-        // butuh input todolistnya dari user
-        System.out.println("MENAMBAH TODOLIST");
-        String todo = input("Todo(x jika batal)");
-
-        if (todo.equals("x")){
-            // batal tambah
-        } else {
-            // berhasil tambah
-            addTodoList(todo);// masukkan todo ke addTodoList
-        }
-    }
-
     public static void testViewAddTodoList(){
-        // tambahkan dulu datanya
         addTodoList("Bakso");
         addTodoList("Es Teh");
         addTodoList("Soto");
-        viewAddTodoList(); // tampilkan menu tambah todolist
-
-
-        showTodoList(); // tampilkan todolist setelah ditambah datanya
+        viewAddTodoList();
+        showTodoList();
     }
-
-    /**
-     * Menampilkan view menghapus todo list
-     */
-    public static void viewRemoveTodoList(){
-        // butuh input todolist dari user
-        System.out.println("MENGHAPUS TODOLIST");
-
-        String number = input("Nomor yang dihapus (x jika batal hapus)");
-
-        if (number.equals("x")) {
-            // batal
-        } else {
-            // konversi number String menjadi integer
-            boolean success = removeTodoList(Integer.valueOf(number));
-            if (!success){
-                System.out.println("Gagal menghapus todolist : " + number);
-            }
-        }
-    }
-
     public static void testViewRemoveTodoList(){
-
-        // tambahkan dulu todolist
         addTodoList("satu");
         addTodoList("dua");
         addTodoList("tiga");
-        showTodoList(); // sebelum dihapus
-
-        viewRemoveTodoList(); // hapus
-
-        showTodoList(); // setelah dihapus
+        showTodoList();
+        viewRemoveTodoList();
+        showTodoList();
     }
-
-    // cek model.length
-    public static void modelLength(){
+    public static void cekModelLength(){
         int a = model.length;
         System.out.println("model length: " + a);
     }
