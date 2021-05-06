@@ -12,7 +12,8 @@ public class AplikasiTodoList {
 //        testRemoveTodoList();
 //        modelLength();
 //        testInput();
-        testViewShowTodoList();
+//        testViewShowTodoList();
+        testViewAddTodoList();
     }
 
     /**
@@ -207,7 +208,27 @@ public class AplikasiTodoList {
      * Menampilkan view menambahkan todo list
      */
     public static void viewAddTodoList(){
+        // butuh input todolistnya dari user
+        System.out.println("MENAMBAH TODOLIST");
+        String todo = input("Todo(x jika batal)");
 
+        if (todo.equals("x")){
+            // batal tambah
+        } else {
+            // berhasil tambah
+            addTodoList(todo);// masukkan todo ke addTodoList
+        }
+    }
+
+    public static void testViewAddTodoList(){
+        // tambahkan dulu datanya
+        addTodoList("Bakso");
+        addTodoList("Es Teh");
+        addTodoList("Soto");
+        viewAddTodoList(); // tampilkan menu tambah todolist
+
+
+        showTodoList(); // tampilkan todolist setelah ditambah datanya
     }
 
     /**
